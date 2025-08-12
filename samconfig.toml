@@ -1,0 +1,12 @@
+# More information about the configuration file can be found here:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "Auth-Dev"
+s3_bucket = "board-sam-lambda"
+s3_prefix = "Auth-Dev"
+region = "ap-northeast-2"
+capabilities = "CAPABILITY_IAM"
+profile = "board"

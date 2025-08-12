@@ -1,0 +1,28 @@
+{
+  "name": "board_auth",
+  "version": "1.0.0",
+  "description": "board auth",
+  "main": "app.js",
+  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "author": "atteri",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "aws-sdk": "^2.1012.0",
+    "@aws-sdk/client-secrets-manager": "^3.27.0",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.1.1",
+    "data-api-client": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^3.4.0",
+    "rand-token": "^1.0.1"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.2.0"
+  }
+}
