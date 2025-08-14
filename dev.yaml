@@ -49,8 +49,8 @@ Globals:
         - subnet-0cb72c20bdbd6392d
     Environment:
       Variables:
-        ISSUER: !Ref JWT_ISSUER
-        SECRET: !Ref JWT_SECRET
+        ISSUER: !Ref ISSUER
+        SECRET: !Ref SECRET
         DATABASE: !Ref DATABASE
         HOSTNAME: !Ref HOSTNAME
         USERNAME: !Ref USERNAME
