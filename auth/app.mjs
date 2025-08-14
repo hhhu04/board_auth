@@ -56,6 +56,8 @@ export const login = async (event) => {
 
             if (user && bcrypt.compareSync(password, user.password)) {
 
+                console.log('passwordCheck : true')
+
                 delete user.password;
 
                 const token = jwt.sign(user, process.env.JWT_SECRET, tokenOptions);
@@ -63,8 +65,6 @@ export const login = async (event) => {
 
                 const date = new Date();
                 date.setDate(date.getDate() + 30);
-
-
 
                 connection.destroy();
                 return createResponse(200, {token, refreshToken});
