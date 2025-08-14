@@ -56,6 +56,7 @@ export const login = async (event) => {
 
             if (user && bcrypt.compareSync(password, user.password)) {
 
+
                 console.log('passwordCheck : true')
 
                 delete user.password;
