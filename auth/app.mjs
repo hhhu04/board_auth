@@ -23,7 +23,6 @@ const createConnection = async () => {
     });
 }
 
-
 const createResponse = (resultCode, body = {}) => {
     return {
         statusCode: resultCode,
