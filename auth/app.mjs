@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken';
-import sha256 from 'js-sha256';
-import aws from 'aws-sdk';
 import mariadb from 'mariadb';
 import bcrypt from 'bcryptjs';
 

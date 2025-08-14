@@ -29,8 +29,5 @@ jobs:
         uses: aws-actions/setup-sam@v2
 
       - name: Build for dev
-        run: npm run build-dev
-
-      - name: Sam deploy
-        run: sam deploy -t dev.yaml --config-env dev --parameter-overrides "ISSUER=${{ secrets.JWT_ISSUER }} SECRET=${{ secrets.JWT_SECRET }} DATABASE=${{ secrets.DATABASE }} HOSTNAME=${{ secrets.HOSTNAME }} USERNAME=${{ secrets.USERNAME }} PASSWORD=${{ secrets.PASSWORD }}"
+        run: npm run build-dev && sam deploy -t dev.yaml --config-env dev --parameter-overrides "ISSUER=${{ secrets.JWT_ISSUER }} SECRET=${{ secrets.JWT_SECRET }} DATABASE=${{ secrets.DATABASE }} HOSTNAME=${{ secrets.HOSTNAME }} USERNAME=${{ secrets.USERNAME }} PASSWORD=${{ secrets.PASSWORD }}"
 
