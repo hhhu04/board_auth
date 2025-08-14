@@ -7,13 +7,13 @@ import bcrypt from 'bcryptjs';
 const tokenOptions = {
     algorithm: 'HS256',
     expiresIn: '10m',
-    issuer: process.env.JWT_ISSUER
+    issuer: process.env.ISSUER
 }
 
 const refreshTokenOptions = {
     algorithm: 'HS256',
     expiresIn: '30d',
-    issuer: process.env.JWT_ISSUER
+    issuer: process.env.ISSUER
 }
 
 
@@ -61,8 +61,8 @@ export const login = async (event) => {
 
                 delete user.password;
 
-                const token = jwt.sign(user, process.env.JWT_SECRET, tokenOptions);
-                const refreshToken = jwt.sign(user, process.env.JWT_SECRET, refreshTokenOptions);
+                const token = jwt.sign(user, process.env.SECRET, tokenOptions);
+                const refreshToken = jwt.sign(user, process.env.SECRET, refreshTokenOptions);
 
                 const date = new Date();
                 date.setDate(date.getDate() + 30);

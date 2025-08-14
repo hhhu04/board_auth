@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Parameters:
-  JWT_ISSUER:
+  ISSUER:
     Type: String
     Default: "no_issuer"
-  JWT_SECRET:
+  SECRET:
     Type: String
     Default: "no_secret"
   DATABASE:
@@ -49,8 +49,8 @@ Globals:
         - subnet-0cb72c20bdbd6392d
     Environment:
       Variables:
-        JWT_ISSUER: !Ref JWT_ISSUER
-        JWT_SECRET: !Ref JWT_SECRET
+        ISSUER: !Ref JWT_ISSUER
+        SECRET: !Ref JWT_SECRET
         DATABASE: !Ref DATABASE
         HOSTNAME: !Ref HOSTNAME
         USERNAME: !Ref USERNAME
