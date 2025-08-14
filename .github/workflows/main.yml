@@ -30,14 +30,18 @@ jobs:
 
       - name: Build for dev
         run: npm run build-dev
-        env:
-          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          HOSTNAME: ${{ secrets.HOSTNAME }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          DATABASE: ${{ secrets.DATABASE }}
 
       - name: Sam deploy
-        run: sam deploy -t dev.yaml --config-env dev
+        run: |
+          sam deploy \
+            --template-file dev.yaml \
+            --stack-name board_auth_dev \
+            --parameter-overrides \
+              JWT_ISSUER=${{ secrets.JWT_ISSUER }} \
+              JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              DATABASE=${{ secrets.DATABASE }} \
+              HOSTNAME=${{ secrets.HOSTNAME }} \
+              USERNAME=${{ secrets.USERNAME }} \
+              PASSWORD=${{ secrets.PASSWORD }}
+
 

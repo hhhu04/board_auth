@@ -58,7 +58,6 @@ export const login = async (event) => {
 
                 console.log('passwordCheck : true')
 
-
                 delete user.password;
 
                 const token = jwt.sign(user, process.env.JWT_SECRET, tokenOptions);

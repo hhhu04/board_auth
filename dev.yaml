@@ -4,7 +4,26 @@ Description: >
   board-auth
 
   Sample SAM Template for board-auth
-  
+Parameters:
+  JWT_ISSUER:
+    Type: String
+    Default: "no_issuer"
+  JWT_SECRET:
+    Type: String
+    Default: "no_secret"
+  DATABASE:
+    Type: String
+    Default: "no_db"
+  HOSTNAME:
+    Type: String
+    Default: "no_host"
+  USERNAME:
+    Type: String
+    Default: "no_user"
+  PASSWORD:
+    Type: String
+    Default: "no_pass"
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Api:
@@ -34,12 +53,12 @@ Globals:
         - subnet-0cb72c20bdbd6392d
     Environment:
       Variables:
-        JWT_ISSUER: ${JWT_ISSUER}
-        JWT_SECRET: ${JWT_SECRET}
-        HOSTNAME: ${HOSTNAME}
-        USERNAME: ${USERNAME}
-        PASSWORD: ${PASSWORD}
-        DATABASE: ${DATABASE}
+        JWT_ISSUER: !Ref JWT_ISSUER
+        JWT_SECRET: !Ref JWT_SECRET
+        DATABASE: !Ref DATABASE
+        HOSTNAME: !Ref HOSTNAME
+        USERNAME: !Ref USERNAME
+        PASSWORD: !Ref PASSWORD
 
 Resources:
   LoginFunction:
