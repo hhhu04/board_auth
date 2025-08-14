@@ -32,6 +32,5 @@ jobs:
         run: npm run build-dev
 
       - name: Sam deploy
-        run: sam deploy --template-file dev.yaml --stack-name board_auth_dev --parameter-overrides "JWT_ISSUER=${{ secrets.JWT_ISSUER }} JWT_SECRET=${{ secrets.JWT_SECRET }} DATABASE=${{ secrets.DATABASE }} HOSTNAME=${{ secrets.HOSTNAME }} USERNAME=${{ secrets.USERNAME }} PASSWORD=${{ secrets.PASSWORD }}"
-
+        run: sam deploy -t dev.yaml --config-env dev --parameter-overrides "JWT_ISSUER=${{ secrets.JWT_ISSUER }} JWT_SECRET=${{ secrets.JWT_SECRET }} DATABASE=${{ secrets.DATABASE }} HOSTNAME=${{ secrets.HOSTNAME }} USERNAME=${{ secrets.USERNAME }} PASSWORD=${{ secrets.PASSWORD }}"
 
