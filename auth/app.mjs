@@ -47,7 +47,6 @@ export const login = async (event) => {
 
         console.log(userId)
 
-
         try {
 
             const [user] = await connection.query(
