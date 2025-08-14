@@ -14,7 +14,6 @@ const refreshTokenOptions = {
     issuer: process.env.ISSUER
 }
 
-
 const createConnection = async () => {
     return await mariadb.createConnection({
         host: process.env.HOSTNAME,
