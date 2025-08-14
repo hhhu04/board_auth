@@ -29,7 +29,7 @@ jobs:
         uses: aws-actions/setup-sam@v2
 
       - name: Build for dev
-        run: npm run build-dev && sam deploy -t dev.yaml --config-env dev
+        run: npm run build-dev
         env:
           JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -37,4 +37,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           DATABASE: ${{ secrets.DATABASE }}
+
+      - name: Sam deploy
+        run: sam deploy -t dev.yaml --config-env dev
 
