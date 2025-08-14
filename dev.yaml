@@ -27,9 +27,19 @@ Globals:
     Timeout: 3
     Runtime: nodejs22.x
     MemorySize: 2048
+    VpcConfig:
+      SecurityGroupIds:
+        - sg-0e49305eaea21b57a
+      SubnetIds:
+        - subnet-0cb72c20bdbd6392d
     Environment:
       Variables:
-        JWT_ISSUER: snfc-auth
+        JWT_ISSUER: ${JWT_ISSUER}
+        JWT_SECRET: ${JWT_SECRET}
+        HOSTNAME: ${HOSTNAME}
+        USERNAME: ${USERNAME}
+        PASSWORD: ${PASSWORD}
+        DATABASE: ${DATABASE}
 
 Resources:
   LoginFunction:
