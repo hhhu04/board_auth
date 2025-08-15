@@ -60,7 +60,7 @@ Resources:
   LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: auth/
+      CodeUri: ./auth
       Handler: app.login
       Events:
         Login:
