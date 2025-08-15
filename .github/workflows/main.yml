@@ -28,6 +28,13 @@ jobs:
       - name: Setup SAM CLI
         uses: aws-actions/setup-sam@v2
 
+      - name: Install dependencies manually
+        run: |
+          cd auth
+          npm ci
+          echo "Dependencies installed:"
+          ls -la node_modules/
+
       - name: Build for dev
         run: sam build -t dev.yaml && sam deploy -t dev.yaml --config-env dev --parameter-overrides "ISSUER=${{ secrets.JWT_ISSUER }} SECRET=${{ secrets.JWT_SECRET }} DATABASE=${{ secrets.DATABASE }} HOSTNAME=${{ secrets.HOSTNAME }} USERNAME=${{ secrets.USERNAME }} PASSWORD=${{ secrets.PASSWORD }}"
 
