@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "build-dev": "sam build -t dev.yaml",
-    "deploy-dev": "npm run build-dev && sam deploy -t dev.yaml --config-env dev"
-  }
-}
