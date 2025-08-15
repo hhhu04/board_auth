@@ -69,8 +69,8 @@ export const login = async (event) => {
                 const dynamoDbParams = {
                     TableName: dynamoDbTable,
                     Item: {
-                        "userIdx": user.idx,
-                        "refreshToken": refreshToken,
+                        "user_idx": user.idx,
+                        "refresh_token": refreshToken,
                         "expireTimestamp": Math.floor(date.getTime() / 1000)
                     }
                 };
