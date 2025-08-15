@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
 import mariadb from 'mariadb';
 import bcrypt from 'bcryptjs';
+import AWS from 'aws-sdk';
+
+const docClient = new AWS.DynamoDB.DocumentClient();
+const dynamoDbTable = process.env.DYNAMODB;
 
 const tokenOptions = {
     algorithm: 'HS256',
@@ -61,6 +65,16 @@ export const login = async (event) => {
 
                 const date = new Date();
                 date.setDate(date.getDate() + 30);
+
+                const dynamoDbParams = {
+                    TableName: dynamoDbTable,
+                    Item: {
+                        "userIdx": user.idx,
+                        "refreshToken": refreshToken,
+                        "expireTimestamp": Math.floor(date.getTime() / 1000)
+                    }
+                };
+                await docClient.put(dynamoDbParams).promise();
 
                 connection.destroy();
                 return createResponse(200, {token, refreshToken});
