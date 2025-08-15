@@ -62,6 +62,7 @@ export const login = async (event) => {
                 const date = new Date();
                 date.setDate(date.getDate() + 30);
 
+
                 connection.destroy();
                 return createResponse(200, {token, refreshToken});
 
