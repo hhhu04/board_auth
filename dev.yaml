@@ -19,8 +19,6 @@ Parameters:
   PASSWORD:
     Type: String
     Default: "no_pass"
-  DYNAMODB:
-    Type: String
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -41,7 +39,7 @@ Globals:
           Headers:
             Access-Control-Allow-Origin: "'*'"
   Function:
-    Timeout: 3
+    Timeout: 30
     Runtime: nodejs22.x
     MemorySize: 2048
     VpcConfig:
@@ -68,6 +66,7 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref DYNAMODB
+        - VPCAccessPolicy: {}
       Events:
         Login:
           Type: Api
