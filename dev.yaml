@@ -75,6 +75,35 @@ Resources:
           Properties:
             Path: /login
             Method: post
+  RefreshFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: auth/
+      Handler: app.refresh
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDBTableName
+      Events:
+        Login:
+          Type: Api
+          Properties:
+            Path: /refresh
+            Method: post
+  LogoutFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: auth/
+      Handler: app.logout
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDBTableName
+      Events:
+        Login:
+          Type: Api
+          Properties:
+            Path: /logout
+            Method: post
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

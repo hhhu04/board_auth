@@ -95,3 +95,117 @@ export const login = async (event) => {
 
 }
 
+
+export const refresh = async (event) => {
+    const body = JSON.parse(event.body)
+    const refreshToken = body.refreshToken;
+    let connection = await createConnection();
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET, {issuer: process.env.JWT_ISSUER});
+        if (decoded.uid) {
+            try {
+                const dynamoDbSelectParams = {
+                    TableName: dynamoDbTable,
+                    Key: {
+                        "user_idx": decoded.uid,
+                        "refresh_token": refreshToken
+                    }
+                };
+
+                const dynamoDbData = await docClient.get(dynamoDbSelectParams).promise();
+                if (!dynamoDbData.Item) {
+                    connection.destroy();
+                    return createResponse(404, {message: 'NOT_FOUND'});
+                }
+
+                const [user] = await connection.query(
+                    'select * from user where user_id = ?;',
+                    [decoded.trim()]
+                )
+
+                if (user) {
+
+                    delete user.password;
+
+                    const token = jwt.sign(user, process.env.SECRET, tokenOptions);
+                    const newRefreshToken = jwt.sign(user, process.env.SECRET, refreshTokenOptions);
+
+                    const date = new Date();
+                    date.setDate(date.getDate() + 30);
+                    const dynamoDbParams = {
+                        TableName: dynamoDbTable,
+                        Item: {
+                            "user_dx": user.idx,
+                            "refresh_token": newRefreshToken,
+                            "expireTimestamp": Math.floor(date.getTime() / 1000)
+                        }
+                    };
+                    await docClient.put(dynamoDbParams).promise();
+
+                    const dynamoDbDeleteParams = {
+                        TableName: dynamoDbTable,
+                        Key: {
+                            "userIdx": decoded.uid,
+                            "refreshToken": refreshToken
+                        }
+                    };
+                    await docClient.delete(dynamoDbDeleteParams).promise();
+
+                    connection.destroy();
+                    return createResponse(200, {token, refreshToken: newRefreshToken, decoded});
+                } else {
+                    connection.destroy();
+                    return createResponse(404, {message: 'NOT_FOUND'});
+                }
+            } catch (err) {
+                connection.destroy();
+                return createResponse(500);
+            }
+        } else {
+            connection.destroy();
+            return createResponse(500, {message: 'PARAMETER_ERROR'});
+        }
+    } catch (err) {
+        connection.destroy();
+        if (err.name === 'TokenExpiredError') {
+            return createResponse(403);
+        }
+        return createResponse(500);
+    }
+
+}
+
+export const logout = async (event) => {
+    const body = JSON.parse(event.body)
+    const refreshToken = body.refreshToken;
+    let connection = await createConnection();
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET, {issuer: process.env.JWT_ISSUER});
+        if (decoded.uid) {
+            try {
+                const dynamoDbDeleteParams = {
+                    TableName: dynamoDbTable,
+                    Key: {
+                        "user_dx": decoded.uid,
+                        "refresh_token": refreshToken
+                    }
+                };
+                await docClient.delete(dynamoDbDeleteParams).promise();
+
+                connection.destroy();
+                return createResponse(200);
+
+            } catch (err) {
+                connection.destroy();
+                return createResponse(500, err);
+            }
+        } else {
+            connection.destroy();
+            return createResponse(500, {message: 'PARAMETER_ERROR'});
+        }
+    } catch (err) {
+        connection.destroy();
+        return createResponse(500, err);
+    }
+}
