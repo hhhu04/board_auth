@@ -120,10 +120,14 @@ export const refresh = async (event) => {
                     return createResponse(404, {message: 'NOT_FOUND'});
                 }
 
+                console.log("refresh userSelect idx : "+decoded.idx)
+
                 const [user] = await connection.query(
                     'select * from user where idx = ?;',
                     [decoded.idx]
                 )
+
+                console.log("refresh user : "+user)
 
                 if (user) {
 
@@ -137,7 +141,7 @@ export const refresh = async (event) => {
                     const dynamoDbParams = {
                         TableName: dynamoDbTable,
                         Item: {
-                            "user_dx": user.idx,
+                            "user_idx": user.idx,
                             "refresh_token": newRefreshToken,
                             "expireTimestamp": Math.floor(date.getTime() / 1000)
                         }
@@ -147,8 +151,8 @@ export const refresh = async (event) => {
                     const dynamoDbDeleteParams = {
                         TableName: dynamoDbTable,
                         Key: {
-                            "userIdx": decoded.idx,
-                            "refreshToken": refreshToken
+                            "user_idx": decoded.idx,
+                            "refresh_token": refreshToken
                         }
                     };
                     await docClient.delete(dynamoDbDeleteParams).promise();
@@ -161,7 +165,7 @@ export const refresh = async (event) => {
                 }
             } catch (err) {
                 connection.destroy();
-                return createResponse(500);
+                return createResponse(500, {message: err.message});
             }
         } else {
             connection.destroy();
