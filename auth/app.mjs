@@ -102,13 +102,14 @@ export const refresh = async (event) => {
     let connection = await createConnection();
 
     try {
-        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET, {issuer: process.env.JWT_ISSUER});
-        if (decoded.uid) {
+        const decoded = jwt.verify(refreshToken, process.env.SECRET, {issuer: process.env.ISSUER});
+        console.log(decoded)
+        if (decoded.idx) {
             try {
                 const dynamoDbSelectParams = {
                     TableName: dynamoDbTable,
                     Key: {
-                        "user_idx": decoded.uid,
+                        "user_idx": decoded.idx,
                         "refresh_token": refreshToken
                     }
                 };
@@ -146,7 +147,7 @@ export const refresh = async (event) => {
                     const dynamoDbDeleteParams = {
                         TableName: dynamoDbTable,
                         Key: {
-                            "userIdx": decoded.uid,
+                            "userIdx": decoded.idx,
                             "refreshToken": refreshToken
                         }
                     };
@@ -181,13 +182,13 @@ export const logout = async (event) => {
     const refreshToken = body.refreshToken;
     let connection = await createConnection();
     try {
-        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET, {issuer: process.env.JWT_ISSUER});
-        if (decoded.uid) {
+        const decoded = jwt.verify(refreshToken, process.env.SECRET, {issuer: process.env.ISSUER});
+        if (decoded.idx) {
             try {
                 const dynamoDbDeleteParams = {
                     TableName: dynamoDbTable,
                     Key: {
-                        "user_dx": decoded.uid,
+                        "user_dx": decoded.idx,
                         "refresh_token": refreshToken
                     }
                 };
