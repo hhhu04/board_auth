@@ -82,7 +82,7 @@ Resources:
       Handler: app.refresh
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref DynamoDBTableName
+            TableName: !Ref DYNAMODB
       Events:
         Login:
           Type: Api
@@ -96,7 +96,7 @@ Resources:
       Handler: app.logout
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref DynamoDBTableName
+            TableName: !Ref DYNAMODB
       Events:
         Login:
           Type: Api
