@@ -121,8 +121,8 @@ export const refresh = async (event) => {
                 }
 
                 const [user] = await connection.query(
-                    'select * from user where user_id = ?;',
-                    [decoded.trim()]
+                    'select * from user where idx = ?;',
+                    [decoded.idx]
                 )
 
                 if (user) {
@@ -188,7 +188,7 @@ export const logout = async (event) => {
                 const dynamoDbDeleteParams = {
                     TableName: dynamoDbTable,
                     Key: {
-                        "user_dx": decoded.idx,
+                        "user_idx": decoded.idx,
                         "refresh_token": refreshToken
                     }
                 };
